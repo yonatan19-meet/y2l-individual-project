@@ -1,0 +1,31 @@
+<!DOCTYPE>
+<head></head>
+<body>
+	 <style>
+	 .button001{
+	 	border: 1px solid black;
+	 	background-color: white;
+	 	color: black;
+	 	display: inline-block;
+	 	text-align: center;
+	 	width: 30px;
+	 	height: 30px;
+	 	cursor: context-menu;
+
+	 		 }
+	.buttonContainer {
+		font-size: 0;
+
+	}
+	</style>
+	{% for q in range(8) %}
+	<div class="buttonContainer">
+		{% for i in range(8) %}
+			<input onkeydown="keyCode(event)" class = "button001" type="text" id = "{{ i+8 *(q) }}" maxlength=1> 
+			{% endfor %}
+		<br>
+	</div>
+	{% endfor %} 
+
+
+</body>
