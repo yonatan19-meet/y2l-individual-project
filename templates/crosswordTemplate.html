@@ -17,12 +17,24 @@
 		font-size: 0;
 
 	}
+	.blankSquare{
+		border: 1px solid black;
+	 	background-color: black;
+	 	display: inline-block;
+	 	width: 30px;
+	 	height: 30px;
+	 	cursor: context-menu;
+	}
 	</style>
 	{% for q in range(8) %}
 	<div class="buttonContainer">
 		{% for i in range(8) %}
-			<input onkeydown="keyCode(event)" class = "button001" type="text" id = "{{ i+8 *(q) }}" maxlength=1> 
-			{% endfor %}
+			{% if (i+8*q) in blanks_list %}
+				<input onkeydown="keyCode(event)" class = "blankSquare" type="" id = "{{ i+8 *(q) }}">
+			{% else %}
+				<input onkeydown="keyCode(event)" class = "button001" type="text" id = "{{ i+8 *(q) }}" maxlength=1>  
+			{% endif %}
+		{% endfor %}
 		<br>
 	</div>
 	{% endfor %} 
