@@ -6,12 +6,15 @@ from sqlalchemy import create_engine
 from wordsApi import find_a_word
 Base = declarative_base()
 from array import *
+from wordsApi import def_list
 
 # Write your classes here :
-global squares, blanks_list, size
+global squares, blanks_list, size, typed_letters_dict, def_list
+def_list = list()
 size = 5
 squares = list()
 blanks_list = []
+typed_letters_dict = {}
 class Square:
 	def __init__(self, letter, blank, row, column):
 		self.letter = letter
@@ -51,8 +54,15 @@ def generate_horizontal_words(first_letter_location):
 		else:
 			sequence += str(query_by_serial_number(first_letter_location + b).letter)
 			b += 1
-	word = find_a_word(sequence)[0]
-	generate_first_horizon_words(first_letter_location, word)
+	if find_a_word(sequence) == False:
+		secondary_vertical(secondary_vertical_locations_list)
+		secondary_horizontal_locations_list(secondary_horizontal_locations_list)
+		print("False")
+	else:
+		output = find_a_word(sequence)
+		def_list.append(output[1])
+		word = output[0]
+		generate_first_horizon_words(first_letter_location, word)
 
 def generate_first_vertical_words(first_letter_location, word):
 	letters_list = list(word)
@@ -76,17 +86,21 @@ def generate_vertical_words(first_letter_location):
 		else:
 			sequence += str(query_by_serial_number(first_letter_location + b).letter)
 			b += size
-	print(sequence)
-	word = find_a_word(sequence)[0]
-	generate_first_vertical_words(first_letter_location, word)
-
+	if find_a_word(sequence) == False:
+		secondary_vertical(secondary_vertical_locations_list)
+		secondary_horizontal_locations_list(secondary_horizontal_locations_list)
+		print("False")
+	else:
+		output = find_a_word(sequence)
+		def_list.append(output[1])
+		word = output[0]
+		generate_first_vertical_words(first_letter_location, word)
+		
 def create_template(new_blank_list):
 	for blank in new_blank_list:
 		query_by_serial_number(blank).blank = True
 		blanks_list.append(query_by_serial_number(blank))
 	print(blanks_list)
-		
-
 
 def make_a_template():
 	for i in range(size):
@@ -117,17 +131,18 @@ initial_words_list = []
 initial_locations_list = []
 # initial(initial_words_list, initial_locations_list)
 
-def secondary(secondary_vertical_locations_list, secondary_horizontal_locations_list, blanks_list):
+def secondary_vertical(secondary_vertical_locations_list):
 	for position in secondary_vertical_locations_list:
-		print(position)
 		generate_vertical_words(position)
-		print("Done")
+
+def secondary_horizontal(secondary_horizontal_locations_list):
 	for position in secondary_horizontal_locations_list:
 		generate_horizontal_words(position)
 
 secondary_vertical_locations_list = [1, 3]
 secondary_horizontal_locations_list = [5, 15]
-secondary(secondary_vertical_locations_list, secondary_horizontal_locations_list, blanks_list)
+secondary_vertical(secondary_vertical_locations_list)
+secondary_horizontal(secondary_horizontal_locations_list)
 
 def view_the_crossword():
 	letters = []
@@ -146,8 +161,3 @@ for line in total:
 	for letter in line:
 		print(str(letter)+" ", end='')
 	print()
-
-
-
-
-
