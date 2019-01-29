@@ -1,16 +1,17 @@
 <!DOCTYPE>
+<html>
 <head>
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	 
+	<link rel="stylesheet" href="style.css">	 
 			<form action="/" method="POST">
 	{% for q in range(size) %}
 	<div class="buttonContainer">
 
 		{% for i in range(size) %}
 			{% if (i+size*q) in blanks_list %}
-				<input onkeydown="keyCode(event)" class = "blankSquare" type="disabled" id = "{{ i + (size *q) }}" disabled="disabled">
+				<input onkeydown="keyCode(event)" class = "blankSquare" type="disabled" name = "{{ i + (size *q) }}" disabled="disabled">
 			{% else %}
 				<input onkeydown="keyCode(event)" class = "button001" type="text" id = "{{ i+ (size *q) }}" name = "{{ i+ (size *q) }}" maxlength=1>  
 			{% endif %}
@@ -22,14 +23,18 @@
 			</form>
 
 <p>
+	vertical:
 	{% for i in range(2) %}
-		vertical:
-		{{def_list[i]}}
+		{{def_list[i][1]}}
+		<br>
 	{% endfor %}
+	<br>
+	horizontal:
 	{% for i in range(2) %}
-		horizontal:
-		{{def_list[i+2]}}
+		{{def_list[i+2][1]}}
+		<br>
 	{% endfor %}
 </p>
 
 </body>
+</html>

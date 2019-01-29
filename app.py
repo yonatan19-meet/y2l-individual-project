@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from model import blanks_list, size, typed_letters_dict, def_list
+from model import blanks_list, size, typed_letters_list, def_list, total
 # from wordsApi import definitionOfWord
 app = Flask(__name__)
 
@@ -11,10 +11,18 @@ def crossword():
 @app.route('/check', methods = ['GET', 'POST'])
 def check():
 	if request.method == 'GET':
-		return render_template('crosswordTemplate.html', blanks_list = blanks_list, size = size)
+		return redirect(url_for('/'))
 	elif request.method == 'POST':
-		return render_template('checked_cross_temp.html', blanks_list = blanks_list, size = size, typed_letters_dict = typed_letters_dict)
-
+		for i in range(size):
+			for q in range(size):
+				index = size*i + q
+				index = str(index)
+				a = request.form[index]
+				typed_letters_list.append(a)
+		if typed_letters_list == total:
+			return render_template('youWon.html')
+		else:
+			return redirect(url_for('/'))
 
 if __name__ == '__main__':
     app.run(debug=True)

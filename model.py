@@ -8,13 +8,18 @@ Base = declarative_base()
 from array import *
 from wordsApi import def_list
 
+# engine = create_engine('sqlite:///')
+# Session = sessionmaker(bind = engine)
+# session = Session()
+
+
 # Write your classes here :
-global squares, blanks_list, size, typed_letters_dict, def_list
+global squares, blanks_list, size, typed_letters_list, def_list, total
 def_list = list()
 size = 5
 squares = list()
 blanks_list = []
-typed_letters_dict = {}
+typed_letters_list = []
 class Square:
 	def __init__(self, letter, blank, row, column):
 		self.letter = letter
@@ -56,7 +61,7 @@ def generate_horizontal_words(first_letter_location):
 			b += 1
 	if find_a_word(sequence) == False:
 		secondary_vertical(secondary_vertical_locations_list)
-		secondary_horizontal_locations_list(secondary_horizontal_locations_list)
+		secondary_horizontal(secondary_horizontal_locations_list)
 		print("False")
 	else:
 		output = find_a_word(sequence)
@@ -86,14 +91,14 @@ def generate_vertical_words(first_letter_location):
 		else:
 			sequence += str(query_by_serial_number(first_letter_location + b).letter)
 			b += size
-	if find_a_word(sequence) == False:
+	result = find_a_word(sequence)
+	if result == False:
 		secondary_vertical(secondary_vertical_locations_list)
 		secondary_horizontal_locations_list(secondary_horizontal_locations_list)
 		print("False")
 	else:
-		output = find_a_word(sequence)
-		def_list.append(output[1])
-		word = output[0]
+		def_list.append(result[1])
+		word = result[0]
 		generate_first_vertical_words(first_letter_location, word)
 		
 def create_template(new_blank_list):
@@ -156,6 +161,9 @@ def view_the_crossword():
 	return(letters)
 
 total = view_the_crossword()
+
+# session.add(total)
+# session.commit()
 
 for line in total:
 	for letter in line:
