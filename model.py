@@ -156,7 +156,10 @@ def view_the_crossword():
 	for c in range(size):
 		a = []
 		for i in range(size):
-			a.append(query_by_serial_number(c*size+i).letter)
+			letter = query_by_serial_number(c*size+i).letter
+			if letter == None:
+				letter = False
+			a.append(letter)
 		letters.append(a)
 	for line in letters:
 		for letter in line:
