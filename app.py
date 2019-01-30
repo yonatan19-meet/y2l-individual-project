@@ -1,28 +1,41 @@
 from flask import Flask, render_template, request
-from model import blanks_list, size, typed_letters_list, def_list, total
+from time import sleep
+from model import blanks_list, size, typed_letters_list, def_list, secondary_vertical_locations_list, view_the_crossword, secondary_horizontal_locations_list, secondary_vertical, secondary_horizontal
 # from wordsApi import definitionOfWord
 app = Flask(__name__)
 
 @app.route('/')
+def home():
+	return render_template('home.html')
+
+@app.route('/home', methods = ['GET', 'POST'])
 def crossword():
+	if request.method == 'POST':
+		secondary_vertical(secondary_vertical_locations_list)
+		sleep(2)
+		secondary_horizontal(secondary_horizontal_locations_list)
 		return render_template('crosswordTemplate.html', blanks_list = blanks_list, size = size, def_list = def_list)
+	else:
+		return render_template('home.html')
 
 
 @app.route('/check', methods = ['GET', 'POST'])
 def check():
 	if request.method == 'GET':
-		return redirect(url_for('/'))
+		return render_template('crosswordTemplate.html', blanks_list = blanks_list, size = size, def_list = def_list)
 	elif request.method == 'POST':
 		for i in range(size):
+			b  = []
 			for q in range(size):
 				index = size*i + q
 				index = str(index)
-				a = request.form[index]
-				typed_letters_list.append(a)
-		if typed_letters_list == total:
+				a = request.form.get(index, False)
+				b.append(a)
+			typed_letters_list.append(b)
+		if typed_letters_list == view_the_crossword():
 			return render_template('youWon.html')
 		else:
-			return redirect(url_for('/'))
+			return render_template('crosswordTemplate.html', blanks_list = blanks_list, size = size, def_list = def_list)
 
 if __name__ == '__main__':
     app.run(debug=True)

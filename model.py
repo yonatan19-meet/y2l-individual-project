@@ -14,7 +14,7 @@ from wordsApi import def_list
 
 
 # Write your classes here :
-global squares, blanks_list, size, typed_letters_list, def_list, total
+global squares, blanks_list, size, typed_letters_list, def_list, secondary_vertical_locations_list, secondary_horizontal_locations_list
 def_list = list()
 size = 5
 squares = list()
@@ -143,11 +143,11 @@ def secondary_vertical(secondary_vertical_locations_list):
 def secondary_horizontal(secondary_horizontal_locations_list):
 	for position in secondary_horizontal_locations_list:
 		generate_horizontal_words(position)
+	view_the_crossword()
 
 secondary_vertical_locations_list = [1, 3]
 secondary_horizontal_locations_list = [5, 15]
-secondary_vertical(secondary_vertical_locations_list)
-secondary_horizontal(secondary_horizontal_locations_list)
+
 
 def view_the_crossword():
 	letters = []
@@ -158,14 +158,13 @@ def view_the_crossword():
 		for i in range(size):
 			a.append(query_by_serial_number(c*size+i).letter)
 		letters.append(a)
+	for line in letters:
+		for letter in line:
+			print(str(letter)+" ", end='')
+		print()
 	return(letters)
-
-total = view_the_crossword()
 
 # session.add(total)
 # session.commit()
 
-for line in total:
-	for letter in line:
-		print(str(letter)+" ", end='')
-	print()
+
