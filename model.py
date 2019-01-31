@@ -65,7 +65,10 @@ def generate_horizontal_words(first_letter_location):
 		print("False")
 	else:
 		output = find_a_word(sequence)
-		def_list.append(output[1])
+		definition = str(output[1]).replace('{bc}', "")
+		definition = definition.replace('{it}', '{')
+		definition = definition.replace('{/it}', '}')
+		def_list.append(definition)
 		word = output[0]
 		generate_first_horizon_words(first_letter_location, word)
 
@@ -97,7 +100,11 @@ def generate_vertical_words(first_letter_location):
 		secondary_horizontal_locations_list(secondary_horizontal_locations_list)
 		print("False")
 	else:
-		def_list.append(result[1])
+		output = result[1]
+		definition = str(output).replace('{bc}', "")
+		definition = definition.replace('{it}', '{')
+		definition = definition.replace('{/it}', '}')
+		def_list.append(definition)
 		word = result[0]
 		generate_first_vertical_words(first_letter_location, word)
 		

@@ -4,7 +4,7 @@ from model import blanks_list, size, typed_letters_list, def_list, secondary_ver
 # from wordsApi import definitionOfWord
 app = Flask(__name__, static_folder = 'y2l-individual-project/static')
 
-@app.route('/')
+@app.route('/', methods = ['GET', 'POST'])
 def home():
 	return render_template('home.html')
 
@@ -14,7 +14,7 @@ def crossword():
 		secondary_vertical(secondary_vertical_locations_list)
 		sleep(2)
 		secondary_horizontal(secondary_horizontal_locations_list)
-		return render_template('crosswordTemplate.html', blanks_list = blanks_list, size = size, def_list = def_list)
+		return render_template('crosswordTemplate.html', blanks_list = blanks_list, size = size, def_list = def_list, secondary_vertical_locations_list = secondary_vertical_locations_list, secondary_horizontal_locations_list = secondary_horizontal_locations_list)
 	else:
 		return render_template('home.html')
 
@@ -22,7 +22,7 @@ def crossword():
 @app.route('/check', methods = ['GET', 'POST'])
 def check():
 	if request.method == 'GET':
-		return render_template('crosswordTemplate.html', blanks_list = blanks_list, size = size, def_list = def_list)
+		return render_template('crosswordTemplate.html', blanks_list = blanks_list, size = size, def_list = def_list, secondary_vertical_locations_list = secondary_vertical_locations_list, secondary_horizontal_locations_list = secondary_horizontal_locations_list)
 	elif request.method == 'POST':
 		typed_letters_list = []
 		for i in range(size):

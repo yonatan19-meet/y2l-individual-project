@@ -1,10 +1,8 @@
 <!DOCTYPE>
 <html>
 <head>
-	<link type = "text/css" rel="stylesheet" href="style.css">
 </head>
 <body>
-	<link rel="stylesheet" href="style.css">
 	<style>
 	.button001 {
 border: 1px solid black;
@@ -40,27 +38,63 @@ cursor: context-menu;
 			{% if (i+size*q) in blanks_list %}
 				
 				<input onkeydown="keyCode(event)" class = "blankSquare" type="disabled" name = {{nickname}} disabled="disabled">
+			{% elif (i+size*q) in secondary_vertical_locations_list  %}
+				{% if i+size*q < 2 %}
+					<input onkeydown="keyCode(event)" class = "button001" type="text" name = {{nickname}} maxlength=1 placeholder="1" autocomplete="off"> 
+				{% else %}
+					<input onkeydown="keyCode(event)" class = "button001" type="text" name = {{nickname}} maxlength=1 placeholder="2" autocomplete="off"> 
+				{% endif %}
+			{% elif (i+size*q) in secondary_horizontal_locations_list  %}
+				{% if i+size*q < 7 %}
+					<input onkeydown="keyCode(event)" class = "button001" type="text" name = {{nickname}} maxlength=1 placeholder="1" autocomplete="off"> 
+				{% else %}
+					<input onkeydown="keyCode(event)" class = "button001" type="text" name = {{nickname}} maxlength=1 placeholder="2" autocomplete="off"> 
+				{% endif %}
 			{% else %}
-				<input onkeydown="keyCode(event)" class = "button001" type="text" name = {{nickname}} maxlength=1> 
+				<input onkeydown="keyCode(event)" class = "button001" type="text" name = {{nickname}} maxlength=1 autocomplete="off"> 
 			{% endif %}
 			{% endwith %}
 		{% endfor %}
 		<br>
 	</div>
 	{% endfor %} 
-			<input type="submit" value = "submit">
+			<input type="submit" value = "submit" class = "generate">
 			</form>
+<style>
+	.generate {
+		background-color: white;
+		position: relative;
+		width: 13%;
+		height: 10.5%;
+		border: 3px solid black;
+		color: black;
+		padding: 16px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 20px;
+		margin: 4px 2px;
+		-webkit-transition-duration: 0.4s;
+		transition-duration: 0.4s;
+		cursor: pointer;
+		z-index: 950;
 
+	}
+	.generate:hover {
+		color: white;
+		background-color: black;
+	}
+</style>
 <p>
-	vertical:
+	vertical: <br>
 	{% for i in range(2) %}
-		{{def_list[i]}}
+		{{i+1}} {{def_list[i]}}
 		<br>
 	{% endfor %}
 	<br>
-	horizontal:
+	horizontal: <br>
 	{% for i in range(2) %}
-		{{def_list[i+2]}}
+		{{i+1}} {{def_list[i+2]}}
 		<br>
 	{% endfor %}
 </p>

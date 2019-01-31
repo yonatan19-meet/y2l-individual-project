@@ -38,7 +38,7 @@ def find_a_word(word_requirements):
 	try:
 		if most_common_word is not str:
 			word_index = 0
-			while definitionOfWord(str(most_common_word)) == False and word_index <= 2:
+			while definitionOfWord(str(most_common_word)) == False and word_index <= 1:
 				print(definitionOfWord(str(most_common_word)))
 				response = requests.get("https://api.datamuse.com/words?sp=" + str(word_requirements))
 				parsed_content = json.loads(response.content)
